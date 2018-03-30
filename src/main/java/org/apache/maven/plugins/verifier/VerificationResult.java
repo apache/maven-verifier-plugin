@@ -46,7 +46,7 @@ public class VerificationResult
     /**
      * Added non existence failure.
      * 
-     * @param file {@linke File}
+     * @param file {@link File}
      */
     public void addNonExistenceFailure( File file )
     {

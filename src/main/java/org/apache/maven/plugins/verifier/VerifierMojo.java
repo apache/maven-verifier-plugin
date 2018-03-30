@@ -233,8 +233,7 @@ public class VerifierMojo
     }
 
     /**
-     * @param printer The verification result printer.
-     * @see {@link VerificationResultPrinter}
+     * @param printer The verification result printer {@link VerificationResultPrinter}
      */
     public void setVerificationResultPrinter( VerificationResultPrinter printer )
     {
