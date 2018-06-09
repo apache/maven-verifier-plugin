@@ -41,7 +41,6 @@ import java.util.regex.Pattern;
  * expression.
  *
  * @author <a href="vmassol@apache.org">Vincent Massol</a>
- * @version $Id$
  */
 @Mojo( name = "verify", defaultPhase = LifecyclePhase.INTEGRATION_TEST )
 public class VerifierMojo
