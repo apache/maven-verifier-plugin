@@ -32,7 +32,7 @@ under the License.
   <defaults>
     <default>
       <key>package</key>
-      <value>org.apache.maven.plugin.verifier.model</value>
+      <value>org.apache.maven.plugins.verifier.model</value>
     </default>
   </defaults>
   <classes>

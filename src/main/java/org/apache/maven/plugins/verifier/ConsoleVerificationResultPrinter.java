@@ -51,7 +51,7 @@ public class ConsoleVerificationResultPrinter
     {
         for ( Object o : results.getExistenceFailures() )
         {
-            org.apache.maven.plugin.verifier.model.File file = (org.apache.maven.plugin.verifier.model.File) o;
+            org.apache.maven.plugins.verifier.model.File file = (org.apache.maven.plugins.verifier.model.File) o;
 
             printMessage( "File not found [" + file.getLocation() + "]" );
         }
@@ -61,7 +61,7 @@ public class ConsoleVerificationResultPrinter
     {
         for ( Object o : results.getNonExistenceFailures() )
         {
-            org.apache.maven.plugin.verifier.model.File file = (org.apache.maven.plugin.verifier.model.File) o;
+            org.apache.maven.plugins.verifier.model.File file = (org.apache.maven.plugins.verifier.model.File) o;
 
             printMessage( "File should not exist [" + file.getLocation() + "]" );
         }
@@ -71,7 +71,7 @@ public class ConsoleVerificationResultPrinter
     {
         for ( Object o : results.getContentFailures() )
         {
-            org.apache.maven.plugin.verifier.model.File file = (org.apache.maven.plugin.verifier.model.File) o;
+            org.apache.maven.plugins.verifier.model.File file = (org.apache.maven.plugins.verifier.model.File) o;
 
             printMessage( "File [" + file.getLocation() + "] does not match regexp [" + file.getContains() + "]" );
         }

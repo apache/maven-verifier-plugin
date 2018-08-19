@@ -19,22 +19,41 @@ package org.apache.maven.plugins.verifier;
  * under the License.
  */
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.verifier.model.Verifications;
-import org.apache.maven.plugin.verifier.model.io.xpp3.VerificationsXpp3Reader;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.verifier.model.Verifications;
+import org.apache.maven.plugins.verifier.model.io.xpp3.VerificationsXpp3Reader;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
 
 /**
  * Verifies the existence or non-existence of files/directories and optionally checks file content against a regular
@@ -115,7 +134,7 @@ public class VerifierMojo
             reader.close();
             reader = null;
 
-            for ( org.apache.maven.plugin.verifier.model.File file : verifications.getFiles() )
+            for ( org.apache.maven.plugins.verifier.model.File file : verifications.getFiles() )
             {
                 // Transform the file to check into an absolute path prefixing the basedir if
                 // the location is relative
@@ -146,7 +165,7 @@ public class VerifierMojo
         return results;
     }
 
-    private boolean verifyFile( org.apache.maven.plugin.verifier.model.File fileCheck, VerificationResult results )
+    private boolean verifyFile( org.apache.maven.plugins.verifier.model.File fileCheck, VerificationResult results )
         throws IOException
     {
         boolean result;
@@ -161,7 +180,7 @@ public class VerifierMojo
     }
 
     // CHECKSTYLE_OFF: LineLength
-    private boolean verifyFileContent( org.apache.maven.plugin.verifier.model.File fileCheck, VerificationResult results )
+    private boolean verifyFileContent( org.apache.maven.plugins.verifier.model.File fileCheck, VerificationResult results )
         throws IOException
     {
         boolean result = false;
@@ -187,7 +206,7 @@ public class VerifierMojo
     }
     // CHECKSTYLE_ON: LineLength
 
-    private boolean verifyFileExistence( org.apache.maven.plugin.verifier.model.File fileCheck,
+    private boolean verifyFileExistence( org.apache.maven.plugins.verifier.model.File fileCheck,
                                          VerificationResult results )
     {
         boolean result;

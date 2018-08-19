@@ -22,7 +22,7 @@ package org.apache.maven.plugins.verifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.maven.plugin.verifier.model.File;
+import org.apache.maven.plugins.verifier.model.File;
 
 /**
  * 
