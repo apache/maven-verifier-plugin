@@ -53,7 +53,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.verifier.model.Verifications;
 import org.apache.maven.plugins.verifier.model.io.xpp3.VerificationsXpp3Reader;
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 /**
  * Verifies the existence or non-existence of files/directories and optionally checks file content against a regular
@@ -74,10 +74,9 @@ public class VerifierMojo
     /**
      * The file containing the verifications to perform.
      */
-    // CHECKSTYLE_OFF: LineLength
-    @Parameter( property = "verifier.verificationFile", defaultValue = "${basedir}/src/test/verifier/verifications.xml", required = true )
+    @Parameter( property = "verifier.verificationFile",
+                defaultValue = "${basedir}/src/test/verifier/verifications.xml", required = true )
     private File verificationFile;
-    // CHECKSTYLE_ON: LineLength
 
     /**
      * Whether the build will fail on verification errors.
@@ -123,16 +122,10 @@ public class VerifierMojo
     {
         VerificationResult results = new VerificationResult();
 
-        Reader reader = null;
-        try
+        try ( Reader reader = new FileReader( this.verificationFile ) )
         {
-            reader = new FileReader( this.verificationFile );
-
             VerificationsXpp3Reader xppReader = new VerificationsXpp3Reader();
             Verifications verifications = xppReader.read( reader );
-
-            reader.close();
-            reader = null;
 
             for ( org.apache.maven.plugins.verifier.model.File file : verifications.getFiles() )
             {
@@ -149,23 +142,16 @@ public class VerifierMojo
                 }
             }
         }
-        catch ( org.codehaus.plexus.util.xml.pull.XmlPullParserException e )
+        catch ( XmlPullParserException | IOException e )
         {
             throw new MojoExecutionException( "Error while verifying files", e );
-        }
-        catch ( IOException e )
-        {
-            throw new MojoExecutionException( "Error while verifying files", e );
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
 
         return results;
     }
 
-    private boolean verifyFile( org.apache.maven.plugins.verifier.model.File fileCheck, VerificationResult results )
+    private boolean verifyFile( org.apache.maven.plugins.verifier.model.File fileCheck,
+                                VerificationResult results )
         throws IOException
     {
         boolean result;
@@ -179,8 +165,8 @@ public class VerifierMojo
         return result;
     }
 
-    // CHECKSTYLE_OFF: LineLength
-    private boolean verifyFileContent( org.apache.maven.plugins.verifier.model.File fileCheck, VerificationResult results )
+    private boolean verifyFileContent( org.apache.maven.plugins.verifier.model.File fileCheck,
+                                       VerificationResult results )
         throws IOException
     {
         boolean result = false;
@@ -204,7 +190,6 @@ public class VerifierMojo
 
         return result;
     }
-    // CHECKSTYLE_ON: LineLength
 
     private boolean verifyFileExistence( org.apache.maven.plugins.verifier.model.File fileCheck,
                                          VerificationResult results )

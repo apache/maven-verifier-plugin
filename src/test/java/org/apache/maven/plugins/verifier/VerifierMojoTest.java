@@ -3,11 +3,9 @@ package org.apache.maven.plugins.verifier;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.verifier.VerificationResult;
-import org.apache.maven.plugins.verifier.VerificationResultPrinter;
-import org.apache.maven.plugins.verifier.VerifierMojo;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -36,7 +34,7 @@ public class VerifierMojoTest
     private File getResourceFile( String name ) throws UnsupportedEncodingException
     {
         String file = getClass().getResource( name ).getFile();
-        String decode = URLDecoder.decode( file, "UTF-8" ); // necessary for JDK 1.5+, where spaces are escaped to %20
+        String decode = URLDecoder.decode( file, StandardCharsets.UTF_8.toString() );
         return new File( decode );
     }
 
@@ -70,15 +68,11 @@ public class VerifierMojoTest
         mojo.setBaseDir( new File( "c:/some/path" ) );
         mojo.setVerificationFile( file );
         mojo.setFailOnError( true );
-        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
-        {
-            public void print( VerificationResult result )
-            {
-                assertEquals( 1, result.getExistenceFailures().size() );
-                assertEquals( 0, result.getNonExistenceFailures().size() );
-                assertEquals( 0, result.getContentFailures().size() );
-            }
-        } );
+        mojo.setVerificationResultPrinter(result -> {
+            assertEquals( 1, result.getExistenceFailures().size() );
+            assertEquals( 0, result.getNonExistenceFailures().size() );
+            assertEquals( 0, result.getContentFailures().size() );
+        });
 
         try
         {
@@ -99,15 +93,11 @@ public class VerifierMojoTest
         mojo.setBaseDir( file.getParentFile() );
         mojo.setVerificationFile( file );
         mojo.setFailOnError( true );
-        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
-        {
-            public void print( VerificationResult result )
-            {
-                assertEquals( 0, result.getExistenceFailures().size() );
-                assertEquals( 0, result.getNonExistenceFailures().size() );
-                assertEquals( 0, result.getContentFailures().size() );
-            }
-        } );
+        mojo.setVerificationResultPrinter(result -> {
+            assertEquals( 0, result.getExistenceFailures().size() );
+            assertEquals( 0, result.getNonExistenceFailures().size() );
+            assertEquals( 0, result.getContentFailures().size() );
+        });
 
         mojo.execute();
     }
@@ -119,15 +109,11 @@ public class VerifierMojoTest
         File file = getResourceFile( "/InexistentFile.xml" );
         mojo.setBaseDir( new File( "c:/some/path" ) );
         mojo.setVerificationFile( file );
-        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
-        {
-            public void print( VerificationResult result )
-            {
-                assertEquals( 0, result.getExistenceFailures().size() );
-                assertEquals( 0, result.getNonExistenceFailures().size() );
-                assertEquals( 0, result.getContentFailures().size() );
-            }
-        } );
+        mojo.setVerificationResultPrinter(result -> {
+            assertEquals( 0, result.getExistenceFailures().size() );
+            assertEquals( 0, result.getNonExistenceFailures().size() );
+            assertEquals( 0, result.getContentFailures().size() );
+        });
 
         mojo.execute();
     }
@@ -140,15 +126,13 @@ public class VerifierMojoTest
         mojo.setBaseDir( file.getParentFile() );
         mojo.setVerificationFile( file );
         mojo.setFailOnError( true );
-        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
-        {
-            public void print( VerificationResult result )
+        mojo.setVerificationResultPrinter( result ->
             {
                 assertEquals( 0, result.getExistenceFailures().size() );
                 assertEquals( 1, result.getNonExistenceFailures().size() );
                 assertEquals( 0, result.getContentFailures().size() );
             }
-        } );
+         );
 
         try
         {
@@ -168,15 +152,11 @@ public class VerifierMojoTest
         File file = getResourceFile( "/FileExistsValidContent.xml" );
         mojo.setBaseDir( file.getParentFile() );
         mojo.setVerificationFile( file );
-        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
-        {
-            public void print( VerificationResult result )
-            {
-                assertEquals( 0, result.getExistenceFailures().size() );
-                assertEquals( 0, result.getNonExistenceFailures().size() );
-                assertEquals( 0, result.getContentFailures().size() );
-            }
-        } );
+        mojo.setVerificationResultPrinter(result -> {
+            assertEquals( 0, result.getExistenceFailures().size() );
+            assertEquals( 0, result.getNonExistenceFailures().size() );
+            assertEquals( 0, result.getContentFailures().size() );
+        });
 
         mojo.execute();
     }
@@ -189,15 +169,11 @@ public class VerifierMojoTest
         mojo.setBaseDir( file.getParentFile() );
         mojo.setVerificationFile( file );
         mojo.setFailOnError( true );
-        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
-        {
-            public void print( VerificationResult result )
-            {
-                assertEquals( 0, result.getExistenceFailures().size() );
-                assertEquals( 0, result.getNonExistenceFailures().size() );
-                assertEquals( 1, result.getContentFailures().size() );
-            }
-        } );
+        mojo.setVerificationResultPrinter(result -> {
+            assertEquals( 0, result.getExistenceFailures().size() );
+            assertEquals( 0, result.getNonExistenceFailures().size() );
+            assertEquals( 1, result.getContentFailures().size() );
+        });
 
         try
         {

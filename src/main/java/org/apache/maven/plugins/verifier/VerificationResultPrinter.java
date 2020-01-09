@@ -22,6 +22,7 @@ package org.apache.maven.plugins.verifier;
 /**
  * 
  */
+@FunctionalInterface
 public interface VerificationResultPrinter
 {
     /**
