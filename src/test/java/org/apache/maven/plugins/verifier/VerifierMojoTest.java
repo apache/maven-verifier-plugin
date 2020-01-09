@@ -1,14 +1,5 @@
 package org.apache.maven.plugins.verifier;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.verifier.VerificationResult;
-import org.apache.maven.plugins.verifier.VerificationResultPrinter;
-import org.apache.maven.plugins.verifier.VerifierMojo;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -28,18 +19,26 @@ import org.apache.maven.plugins.verifier.VerifierMojo;
  * under the License.
  */
 
-import junit.framework.TestCase;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
+import static org.junit.Assert.*;
 
 public class VerifierMojoTest
-    extends TestCase
 {
     private File getResourceFile( String name ) throws UnsupportedEncodingException
     {
         String file = getClass().getResource( name ).getFile();
-        String decode = URLDecoder.decode( file, "UTF-8" ); // necessary for JDK 1.5+, where spaces are escaped to %20
+        String decode = URLDecoder.decode( file, StandardCharsets.UTF_8.toString()  ); // necessary for JDK 1.5+, where spaces are escaped to %20
         return new File( decode );
     }
 
+    @Test
     public void testPrefixWithBaseDir()
     {
         VerifierMojo mojo = new VerifierMojo();
@@ -51,6 +50,7 @@ public class VerifierMojoTest
         assertEquals( expectedResult.getPath(), result.getPath() );
     }
 
+    @Test
     public void testDoNotPrefixWhenAbsolutePath()
     {
         VerifierMojo mojo = new VerifierMojo();
@@ -62,6 +62,7 @@ public class VerifierMojoTest
         assertEquals( absoluteFile.getPath(), result.getPath() );
     }
 
+    @Test
     public void testCheckFileThatDoesNotExist()
         throws Exception
     {
@@ -91,6 +92,7 @@ public class VerifierMojoTest
         }
     }
 
+    @Test
     public void testCheckFileThatExists()
         throws Exception
     {
@@ -112,6 +114,7 @@ public class VerifierMojoTest
         mojo.execute();
     }
 
+    @Test
     public void testCheckForInexistentFile()
         throws Exception
     {
@@ -132,6 +135,7 @@ public class VerifierMojoTest
         mojo.execute();
     }
 
+    @Test
     public void testCheckForInexistentFileThatExists()
         throws Exception
     {
@@ -161,6 +165,7 @@ public class VerifierMojoTest
         }
     }
 
+    @Test
     public void testCheckFileForContent()
         throws Exception
     {
@@ -181,6 +186,7 @@ public class VerifierMojoTest
         mojo.execute();
     }
 
+    @Test
     public void testCheckFileForInvalidContent()
         throws Exception
     {

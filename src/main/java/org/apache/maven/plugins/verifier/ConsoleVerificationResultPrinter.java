@@ -20,6 +20,7 @@ package org.apache.maven.plugins.verifier;
  */
 
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugins.verifier.model.File;
 
 /**
  * 
@@ -42,37 +43,18 @@ public class ConsoleVerificationResultPrinter
      */
     public void print( VerificationResult results )
     {
-        printExistenceFailures( results );
-        printNonExistenceFailures( results );
-        printContentFailures( results );
-    }
-
-    private void printExistenceFailures( VerificationResult results )
-    {
-        for ( Object o : results.getExistenceFailures() )
+        for ( File file : results.getExistenceFailures() )
         {
-            org.apache.maven.plugins.verifier.model.File file = (org.apache.maven.plugins.verifier.model.File) o;
-
             printMessage( "File not found [" + file.getLocation() + "]" );
         }
-    }
 
-    private void printNonExistenceFailures( VerificationResult results )
-    {
-        for ( Object o : results.getNonExistenceFailures() )
+        for ( File file : results.getNonExistenceFailures() )
         {
-            org.apache.maven.plugins.verifier.model.File file = (org.apache.maven.plugins.verifier.model.File) o;
-
             printMessage( "File should not exist [" + file.getLocation() + "]" );
         }
-    }
 
-    private void printContentFailures( VerificationResult results )
-    {
-        for ( Object o : results.getContentFailures() )
+        for ( File file : results.getContentFailures() )
         {
-            org.apache.maven.plugins.verifier.model.File file = (org.apache.maven.plugins.verifier.model.File) o;
-
             printMessage( "File [" + file.getLocation() + "] does not match regexp [" + file.getContains() + "]" );
         }
     }

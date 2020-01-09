@@ -29,11 +29,11 @@ import org.apache.maven.plugins.verifier.model.File;
  */
 public class VerificationResult
 {
-    private List<File> existenceFailures = new ArrayList<File>();
+    private List<File> existenceFailures = new ArrayList<>();
 
-    private List<File> nonExistenceFailures = new ArrayList<File>();
+    private List<File> nonExistenceFailures = new ArrayList<>();
 
-    private List<File> contentFailures = new ArrayList<File>();
+    private List<File> contentFailures = new ArrayList<>();
 
     /**
      * @param file {@link File}
