@@ -216,4 +216,25 @@ public class VerifierMojoTest
         }
     }
 
+    @Test
+    public void testCheckKoi8FileForContent()
+            throws Exception
+    {
+        VerifierMojo mojo = new VerifierMojo();
+        File file = getResourceFile("/FileExistsIncorrectEncoding.xml");
+        mojo.setBaseDir( file.getParentFile() );
+        mojo.setVerificationFile( file );
+        mojo.setVerificationResultPrinter( new VerificationResultPrinter()
+        {
+            public void print( VerificationResult result )
+            {
+                assertEquals( 0, result.getExistenceFailures().size() );
+                assertEquals( 0, result.getNonExistenceFailures().size() );
+                assertEquals( 1, result.getContentFailures().size() );
+            }
+        } );
+
+        mojo.execute();
+    }
+
 }

@@ -19,10 +19,11 @@ package org.apache.maven.plugins.verifier;
  * under the License.
  */
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,7 +123,7 @@ public class VerifierMojo
     {
         VerificationResult results = new VerificationResult();
 
-        try ( Reader reader = new FileReader( verificationFile ) )
+        try ( BufferedReader reader = Files.newBufferedReader( verificationFile.toPath(), StandardCharsets.UTF_8 ) )
         {
             VerificationsXpp3Reader xppReader = new VerificationsXpp3Reader();
             Verifications verifications = xppReader.read( reader );
@@ -176,7 +177,8 @@ public class VerifierMojo
 
         // Note: Very inefficient way as we load the whole file in memory. If you have a better
         // idea, please submit it!
-        Matcher matcher = pattern.matcher( FileUtils.fileRead( new File( fileCheck.getLocation() ) ) );
+        Matcher matcher = pattern.matcher(
+                FileUtils.fileRead( new File( fileCheck.getLocation() ), StandardCharsets.UTF_8.toString() ) );
 
         if ( matcher.find() )
         {
