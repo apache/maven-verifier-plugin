@@ -99,6 +99,7 @@ under the License.
       <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
+        <version>1.11</version>
         <executions>
           <execution>
             <id>generate-xsd-site</id>
