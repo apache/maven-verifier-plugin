@@ -26,15 +26,16 @@ import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.api.plugin.MojoException;
+import org.apache.maven.api.plugin.annotations.LifecyclePhase;
+import org.apache.maven.api.plugin.annotations.Mojo;
+import org.apache.maven.api.plugin.annotations.Parameter;
 import org.apache.maven.plugins.verifier.model.Verifications;
 import org.apache.maven.plugins.verifier.model.io.xpp3.VerificationsXpp3Reader;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Verifies the existence or non-existence of files/directories and optionally checks file content against a regular
@@ -44,8 +45,9 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
  */
 @Mojo( name = "verify", defaultPhase = LifecyclePhase.INTEGRATION_TEST )
 public class VerifierMojo
-    extends AbstractMojo
+    implements org.apache.maven.api.plugin.Mojo
 {
+    private final Logger logger = LoggerFactory.getLogger( getClass() );
     /**
      * Project base directory (prepended to relative file paths).
      */
@@ -65,13 +67,13 @@ public class VerifierMojo
     @Parameter( property = "verifier.failOnError", defaultValue = "true", required = true )
     private boolean failOnError;
 
-    private VerificationResultPrinter resultPrinter = new ConsoleVerificationResultPrinter( getLog() );
+    private VerificationResultPrinter resultPrinter = new ConsoleVerificationResultPrinter();
 
     /**
      * {@inheritDoc}
      */
     public void execute()
-        throws MojoExecutionException
+        throws MojoException
     {
         VerificationResult results = verify();
         resultPrinter.print( results );
@@ -79,7 +81,7 @@ public class VerifierMojo
         // Fail the build if there are errors
         if ( this.failOnError && results.hasFailures() )
         {
-            throw new MojoExecutionException( "There are test failures" );
+            throw new MojoException( "There are test failures" );
         }
     }
 
@@ -99,7 +101,7 @@ public class VerifierMojo
     }
 
     private VerificationResult verify()
-        throws MojoExecutionException
+        throws MojoException
     {
         VerificationResult results = new VerificationResult();
 
@@ -119,13 +121,13 @@ public class VerifierMojo
                 }
                 else
                 {
-                    throw new MojoExecutionException( "Missing <location> element" );
+                    throw new MojoException( "Missing <location> element" );
                 }
             }
         }
         catch ( XmlPullParserException | IOException e )
         {
-            throw new MojoExecutionException( "Error while verifying files", e );
+            throw new MojoException( "Error while verifying files", e );
         }
 
         return results;
@@ -151,7 +153,7 @@ public class VerifierMojo
     {
         boolean result = false;
 
-        getLog().debug( "Verifying contents of " + fileCheck.getLocation() );
+        logger.debug( "Verifying contents of {}", fileCheck.getLocation() );
 
         Pattern pattern = Pattern.compile( fileCheck.getContains() );
 
@@ -179,7 +181,7 @@ public class VerifierMojo
         File physicalFile = new File( fileCheck.getLocation() );
         if ( fileCheck.isExists() )
         {
-            getLog().debug( "Verifying existence of " + physicalFile );
+            logger.debug( "Verifying existence of {}", physicalFile );
             result = physicalFile.exists();
             if ( !result )
             {
@@ -188,7 +190,7 @@ public class VerifierMojo
         }
         else
         {
-            getLog().debug( "Verifying absence of " + physicalFile );
+            logger.debug( "Verifying absence of {}", physicalFile );
             result = !physicalFile.exists();
             if ( !result )
             {

@@ -19,7 +19,7 @@ package org.apache.maven.plugins.verifier;
  * under the License.
  */
 
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.api.plugin.MojoException;
 import org.junit.Test;
 
 import java.io.File;
@@ -86,7 +86,7 @@ public class VerifierMojoTest
             mojo.execute();
             fail( "Should have thrown an exception" );
         }
-        catch ( MojoExecutionException expected )
+        catch ( MojoException expected )
         {
             assertTrue( true );
         }
@@ -159,7 +159,7 @@ public class VerifierMojoTest
             mojo.execute();
             fail( "Should have thrown an exception" );
         }
-        catch ( MojoExecutionException expected )
+        catch ( MojoException expected )
         {
             assertTrue( true );
         }
@@ -210,7 +210,7 @@ public class VerifierMojoTest
             mojo.execute();
             fail( "Should have thrown an exception" );
         }
-        catch ( MojoExecutionException expected )
+        catch ( MojoException expected )
         {
             assertTrue( true );
         }

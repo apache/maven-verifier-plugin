@@ -19,8 +19,9 @@ package org.apache.maven.plugins.verifier;
  * under the License.
  */
 
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.verifier.model.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -28,15 +29,7 @@ import org.apache.maven.plugins.verifier.model.File;
 public class ConsoleVerificationResultPrinter
     implements VerificationResultPrinter
 {
-    private Log log;
-
-    /**
-     * @param log {@link Log}
-     */
-    public ConsoleVerificationResultPrinter( Log log )
-    {
-        this.log = log;
-    }
+    private Logger log = LoggerFactory.getLogger( getClass() );
 
     /**
      * {@inheritDoc}
