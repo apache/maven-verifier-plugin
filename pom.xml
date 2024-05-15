@@ -26,7 +26,6 @@ under the License.
     <artifactId>maven-plugins</artifactId>
     <groupId>org.apache.maven.plugins</groupId>
     <version>34</version>
-    <relativePath>../../pom/maven/maven-plugins/pom.xml</relativePath>
   </parent>
 
   <artifactId>maven-verifier-plugin</artifactId>
@@ -62,7 +61,7 @@ under the License.
   </distributionManagement>
 
   <properties>
-    <mavenVersion>3.0</mavenVersion>
+    <mavenVersion>3.2.5</mavenVersion>
     <javaVersion>7</javaVersion>
     <project.build.outputTimestamp>2020-04-07T21:04:00Z</project.build.outputTimestamp>
   </properties>
@@ -72,6 +71,7 @@ under the License.
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
       <version>${mavenVersion}</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- dependencies to annotations -->
@@ -84,7 +84,7 @@ under the License.
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
