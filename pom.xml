@@ -34,7 +34,7 @@ under the License.
   <description>Assists in integration testing by means of evaluating success/error conditions read from a configuration file.</description>
 
   <prerequisites>
-    <maven>${mavenVersion}</maven>
+    <maven>3.6.3</maven>
   </prerequisites>
 
   <scm>
@@ -49,7 +49,7 @@ under the License.
   </issueManagement>
   <ciManagement>
     <system>Jenkins</system>
-    <url>https://ci-builds.apache.org/job/Maven/job/maven-box/job/maven-verifier-plugin/</url>
+    <url>https://ci-maven.apache.org/job/Maven/job/maven-box/job/maven-verifier-plugin/</url>
   </ciManagement>
   <distributionManagement>
     <site>
@@ -59,8 +59,8 @@ under the License.
   </distributionManagement>
 
   <properties>
-    <mavenVersion>3.0</mavenVersion>
     <javaVersion>8</javaVersion>
+    <mavenVersion>3.9.9</mavenVersion>
     <project.build.outputTimestamp>2020-04-07T21:04:00Z</project.build.outputTimestamp>
   </properties>
 
@@ -69,6 +69,7 @@ under the License.
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
       <version>${mavenVersion}</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- dependencies to annotations -->
@@ -81,13 +82,16 @@ under the License.
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-xml</artifactId>
     </dependency>
   </dependencies>
 
