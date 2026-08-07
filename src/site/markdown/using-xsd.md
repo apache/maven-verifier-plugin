@@ -1,3 +1,10 @@
+---
+title: Using the XML Schema Verifications 1.0.0
+author: 
+  - Dennis Lundberg
+date: 2010-01-18
+---
+
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
