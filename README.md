@@ -14,7 +14,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-Contributing to [Apache Maven Stage Plugin](https://maven.apache.org/plugins/maven-stage-plugin/)
 RETIRED - [Apache Maven Verifier Plugin](https://maven.apache.org/plugins/maven-verifier-plugin/)
 =================================================================================================
 
