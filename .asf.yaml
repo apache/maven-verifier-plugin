@@ -17,7 +17,6 @@
 # see https://s.apache.org/asfyaml
 github:
   description: "Apache Maven Verifier Plugin (RETIRED)"
-  homepage: https://maven.apache.org/plugins/maven-verifier-plugin/
   labels:
     - java
     - build-management
@@ -28,8 +27,6 @@ github:
     squash: true
     merge: false
     rebase: true
-  autolink_jira:
-    - MVERIFIER
   protected_branches:
     master: { }
   pull_requests:
